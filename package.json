@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "start": "npm run next:dev",
     "build": "npm run next:build & npm run fb:build",
+    "fb:em": "cd firebase && firebase emulators:start",
     "fb:lint": "npm run lint --prefix firebase/functions",
     "fb:build": "npm run build --prefix firebase/functions",
     "fb:build:watch": "npm run build:watch --prefix firebase/functions",
