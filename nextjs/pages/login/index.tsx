@@ -13,7 +13,7 @@ import Grid from "@mui/material/Grid";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import Typography from "@mui/material/Typography";
 
-function Copyright(props: any) {
+const Copyright = (props: any) => {
   return (
     <Typography
       variant="body2"
@@ -29,7 +29,7 @@ function Copyright(props: any) {
       {"."}
     </Typography>
   );
-}
+};
 
 const Login: NextPage = () => {
   // We async load this component since it requires the window object
