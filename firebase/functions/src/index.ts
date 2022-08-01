@@ -6,7 +6,7 @@ admin.initializeApp();
 const db = admin.firestore();
 
 export const helloWorld = functions.https.onRequest((request, response) => {
-  functions.logger.info("Hello logs!", { structuredData: true });
+  functions.logger.info("Helloo1 logs!", { structuredData: true });
   response.send("Hello from Firebase!");
 });
 

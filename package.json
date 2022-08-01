@@ -3,20 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "npm run next:dev",
+    "start": "ttab -t 'Nextjs' npm run next:dev & npm run fb:em",
     "build": "npm run next:build & npm run fb:build",
-    "fb:em": "cd firebase && firebase emulators:start",
+    "fb:em": "cd firebase && ttab -w -t 'Firebase Emulators' firebase emulators:start & npm run fb:build:watch",
     "fb:lint": "npm run lint --prefix firebase/functions",
     "fb:build": "npm run build --prefix firebase/functions",
-    "fb:build:watch": "npm run build:watch --prefix firebase/functions",
+    "fb:build:watch": "ttab -w -t 'Functions tsc' npm run build:watch --prefix firebase/functions",
     "fb:serve": "npm run serve --only functions --prefix firebase/functions",
     "fb:shell": "npm run shell --prefix firebase/functions",
     "fb:start": "npm run start --prefix firebase/functions",
+    "fb:stop": "npx kill-port --port 8080,8085,9099,5000,5001,9199",
     "fb:deploy": "npm run deploy --only functions --prefix firebase/functions",
     "fb:logs": "npm run logs --prefix firebase/functions",
     "next:dev": "npm run dev --prefix nextjs",
     "next:build": "npm run build --prefix nextjs",
     "next:start": "npm run start --prefix nextjs",
     "next:lint": "npm run lint --prefix nextjs"
+  },
+  "devDependencies": {
+    "kill-port": "^2.0.1",
+    "ttab": "^0.7.2"
   }
 }
