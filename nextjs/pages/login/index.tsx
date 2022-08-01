@@ -82,7 +82,7 @@ const Login: NextPage = () => {
           </Avatar>
           <Typography variant="h4">Igoto App</Typography>
           <div id="firebaseui-auth-container" />
-          <Copyright sx={{ mt: 5 }} />
+          {/* <Copyright sx={{ mt: 5 }} /> */}
         </Box>
       </Grid>
     </Grid>

@@ -16,6 +16,16 @@ const nextConfig = {
     FIREBASE_FIRESTORE_EMULATOR_HOST: "http://127.0.0.1:9099",
     FIREBASE_FIRESTORE_EMULATOR_PORT: 8080,
   },
+  rewrites: async () => [
+    {
+      source: "/terms-of-service",
+      destination: "/api/terms-of-service",
+    },
+    {
+      source: "/privacy-policy",
+      destination: "/api/privacy-policy",
+    },
+  ],
 };
 
 module.exports = nextConfig;

@@ -6,6 +6,7 @@ export const uiConfig = {
   tosUrl: "/terms-of-service",
   privacyPolicyUrl: "/privacy-policy",
   signInOptions: [
+    "apple.com",
     GoogleAuthProvider.PROVIDER_ID,
     EmailAuthProvider.PROVIDER_ID,
   ],
