@@ -53,8 +53,7 @@ const Login: NextPage = () => {
         sm={4}
         md={7}
         sx={{
-          backgroundImage:
-            'url(https://images.unsplash.com/photo-1658302640117-da5e9d9836cc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY1OTM3NjUwNA&ixlib=rb-1.2.1&q=80&w=1080)',
+          backgroundImage: 'url(https://source.unsplash.com/random/?travel)',
           backgroundRepeat: 'no-repeat',
           backgroundColor: t =>
             t.palette.mode === 'light'
