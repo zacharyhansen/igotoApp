@@ -5,7 +5,8 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import type { AppProps } from 'next/app';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import authHook from '../hooks/authHook';
+import { auth } from '../config/firebase.config';
+import { CurrentUserProvider } from '../contexts/currentUserContext';
 
 const theme = createTheme();
 
@@ -24,14 +25,16 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <ThemeProvider theme={theme}>
-      {/* Use the provided pagelayout if it has been attached to the page */}
-      {Component.PageLayout ? (
-        <Component.PageLayout>
+      <CurrentUserProvider auth={auth}>
+        {/* Use the provided pagelayout if it has been attached to the page */}
+        {Component.PageLayout ? (
+          <Component.PageLayout>
+            <Component {...pageProps} />
+          </Component.PageLayout>
+        ) : (
           <Component {...pageProps} />
-        </Component.PageLayout>
-      ) : (
-        <Component {...pageProps} />
-      )}
+        )}
+      </CurrentUserProvider>
     </ThemeProvider>
   );
 }
