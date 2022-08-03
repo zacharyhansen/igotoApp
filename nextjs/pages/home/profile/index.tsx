@@ -1,11 +1,10 @@
 import UserCard from '../../../components/Cards/UserCard';
-import { auth } from '../../../config/firebase.config';
+import { useCurrentUserContext } from '../../../contexts/currentUserContext';
 import BaseLayout from '../../../layouts/BaseLayout';
 import { NextPageWithLayout } from '../../../nextjsTypeExtensions/NextPageWithLayout';
 
 const Profile: NextPageWithLayout = () => {
-  const { currentUser } = auth;
-
+  const currentUser = useCurrentUserContext()?.currentUser;
   return (
     <div>
       {currentUser ? <UserCard user={currentUser} /> : null}
