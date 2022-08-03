@@ -1,13 +1,13 @@
-import { GoogleAuthProvider, EmailAuthProvider } from "firebase/auth";
+import { GoogleAuthProvider, EmailAuthProvider } from 'firebase/auth';
 
 export const uiConfig = {
-  // signInFlow: "popup",
-  signInSuccessUrl: "/",
-  tosUrl: "/terms-of-service",
-  privacyPolicyUrl: "/privacy-policy",
+  signInFlow: 'popup',
+  signInSuccessUrl: '/home/profile',
+  tosUrl: '/terms-of-service',
+  privacyPolicyUrl: '/privacy-policy',
   signInOptions: [
-    "apple.com",
+    'apple.com',
     GoogleAuthProvider.PROVIDER_ID,
-    EmailAuthProvider.PROVIDER_ID,
-  ],
+    EmailAuthProvider.PROVIDER_ID
+  ]
 };
