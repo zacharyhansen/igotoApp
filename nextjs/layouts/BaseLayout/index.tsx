@@ -1,48 +1,74 @@
-import * as React from 'react';
+import { useState, useCallback, Fragment } from 'react';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
 import Header from './Header';
-import Drawer from '../../components/Drawer';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import {
-  Dashboard,
-  Layers,
-  ShoppingCart,
-  People,
-  BarChart,
-  ChevronLeft,
-  Menu,
-  Notifications,
-  Settings
-} from '@mui/icons-material';
-import DrawerTemporary from '../../components/DrawerTempory';
+import Drawer from '../../components/Drawers/Drawer';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Dashboard, Notifications, Settings } from '@mui/icons-material';
+import DrawerTemporary from '../../components/Drawers/DrawerTempory';
+import ListItems from '../../components/ListItems/ListItems';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { firebaseSignOut } from '../../config/firebase.config';
+import CloseIcon from '@mui/icons-material/Close';
+import { routes } from '../../constants/routes';
+
 interface BaseLayoutProps {
   children: JSX.Element | JSX.Element[];
 }
 
 const BaseLayout = ({ children }: BaseLayoutProps) => {
-  const [settingsOpen, setSettingsOpen] = React.useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
-  const handleSettingsToggle = React.useCallback(() => {
+  const handleSettingsToggle = useCallback(() => {
     setSettingsOpen(!settingsOpen);
   }, [settingsOpen]);
 
   return (
-    <React.Fragment>
+    <Fragment>
       <DrawerTemporary
+        title="Settingsw Drawer"
         anchor="right"
         open={settingsOpen}
         onToggleDrawer={handleSettingsToggle}
         variant="persistent"
-      />
+      >
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="baseline"
+          pt={2}
+          pb={0.8}
+          px={2}
+        >
+          <Box display="flex" alignItems="center">
+            <Typography variant="h5">Settings</Typography>
+          </Box>
+
+          <IconButton
+            color="primary"
+            aria-label="upload picture"
+            component="label"
+            onClick={handleSettingsToggle}
+          >
+            <CloseIcon />
+          </IconButton>
+        </Box>
+        <ListItems
+          asButtons={true}
+          listItems={[
+            {
+              primaryText: 'Sign out',
+              primaryIcon: <LogoutIcon />,
+              primaryAction: firebaseSignOut()
+            }
+          ]}
+        />
+      </DrawerTemporary>
       <Box sx={{ display: 'flex' }}>
         <Header position="absolute" open={true}>
           <Toolbar
@@ -81,40 +107,21 @@ const BaseLayout = ({ children }: BaseLayoutProps) => {
             }}
           ></Toolbar>
           <Divider />
-          <List component="nav">
-            <React.Fragment>
-              <ListItemButton>
-                <ListItemIcon>
-                  <Dashboard />
-                </ListItemIcon>
-                <ListItemText primary="Dashboard" />
-              </ListItemButton>
-              <ListItemButton>
-                <ListItemIcon>
-                  <ShoppingCart />
-                </ListItemIcon>
-                <ListItemText primary="Orders" />
-              </ListItemButton>
-              <ListItemButton>
-                <ListItemIcon>
-                  <People />
-                </ListItemIcon>
-                <ListItemText primary="Customers" />
-              </ListItemButton>
-              <ListItemButton>
-                <ListItemIcon>
-                  <BarChart />
-                </ListItemIcon>
-                <ListItemText primary="Reports" />
-              </ListItemButton>
-              <ListItemButton>
-                <ListItemIcon>
-                  <Layers />
-                </ListItemIcon>
-                <ListItemText primary="Integrations" />
-              </ListItemButton>
-            </React.Fragment>
-          </List>
+          <ListItems
+            asButtons={true}
+            listItems={[
+              {
+                primaryText: 'Dashboard',
+                primaryIcon: <Dashboard />,
+                link: routes.DASHBOARD
+              },
+              {
+                primaryText: 'Profile',
+                primaryIcon: <AccountCircleIcon />,
+                link: routes.PROFILE
+              }
+            ]}
+          />
         </Drawer>
         <Box
           component="main"
@@ -134,7 +141,7 @@ const BaseLayout = ({ children }: BaseLayoutProps) => {
           </Container>
         </Box>
       </Box>
-    </React.Fragment>
+    </Fragment>
   );
 };
 

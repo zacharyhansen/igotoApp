@@ -1,6 +1,6 @@
 import MuiAppBar from '@mui/material/AppBar';
 import { styled } from '@mui/material/styles';
-import { drawerWidth } from '../../components/Drawer';
+import { drawerWidth } from '../../components/Drawers/Drawer';
 
 interface HeaderPropsInterface {
   open: boolean;

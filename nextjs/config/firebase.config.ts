@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore';
-import { getAuth, connectAuthEmulator } from 'firebase/auth';
+import { getAuth, connectAuthEmulator, signOut } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -28,4 +28,15 @@ if (
   );
 }
 
-export { firebaseApp, db, auth };
+const firebaseSignOut = (onSignout?: VoidFunction) => () => {
+  signOut(auth)
+    .then(() => {
+      onSignout && onSignout();
+    })
+    .catch(error => {
+      // An error happened.
+      console.error('Error signing out: ', error);
+    });
+};
+
+export { firebaseApp, db, auth, firebaseSignOut };

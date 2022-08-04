@@ -1,10 +1,7 @@
-import type { NextPage } from "next";
-import { auth } from "../../config/firebase.config";
-import BaseLayout from "../../layouts/BaseLayout";
+import BaseLayout from '../../layouts/BaseLayout';
+import { NextPageWithLayout } from '../../nextjsTypeExtensions/NextPageWithLayout';
 
-const Home: NextPage = () => {
-  const { currentUser } = auth;
-
+const Home: NextPageWithLayout = () => {
   return (
     <BaseLayout>
       <div>Hello</div>

@@ -9,6 +9,7 @@ import {
 } from 'react';
 import onAuthStateChangedObserver from '../observers/onAuthStateChangedObserver';
 import { useRouter } from 'next/router';
+import { routes } from '../constants/routes';
 
 interface ICurrentUserContext {
   currentUser: User | null;
@@ -27,7 +28,7 @@ export const CurrentUserProvider: FunctionComponent<ICurrentUserProviderProps> =
     const [currentUser, setCurrentUser] = useState(auth.currentUser);
 
     const handleUserLoggedOut = useCallback(() => {
-      router.push('/login');
+      router.push(routes.LOGIN);
     }, [router]);
 
     // Attach firebase observer that will setCurrentUser if auth state changes
