@@ -9,7 +9,7 @@ import Container from '@mui/material/Container';
 import Header from './Header';
 import Drawer from '../../components/Drawers/Drawer';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Dashboard, Notifications, Settings } from '@mui/icons-material';
+import { Dashboard, Settings } from '@mui/icons-material';
 import DrawerTemporary from '../../components/Drawers/DrawerTempory';
 import ListItems from '../../components/ListItems/ListItems';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -85,11 +85,6 @@ const BaseLayout = ({ children }: BaseLayoutProps) => {
             >
               Dashboard
             </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <Notifications />
-              </Badge>
-            </IconButton>
             <IconButton onClick={handleSettingsToggle} color="inherit">
               <Badge color="secondary">
                 <Settings />
@@ -136,9 +131,7 @@ const BaseLayout = ({ children }: BaseLayoutProps) => {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <main>{children}</main>
-          </Container>
+          {children}
         </Box>
       </Box>
     </Fragment>

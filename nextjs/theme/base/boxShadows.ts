@@ -1,9 +1,37 @@
 import colors from './colors';
-import StyleFunctions from './StyleFunctions';
+import StyleFunctions from './functions';
 
 const { black, white, info, inputColors, tabs } = colors;
 
-const boxShadows = {
+export interface IBoxShadows {
+  xs: string;
+  sm: string;
+  md: string;
+  lg: string;
+  xl: string;
+  xxl: string;
+  inset: string;
+  navbarBoxShadow: string;
+  buttonBoxShadow: {
+    main: string;
+    stateOf: string;
+    stateOfNotHover: string;
+  };
+  inputBoxShadow: {
+    focus: string;
+    error: string;
+    success: string;
+  };
+  sliderBoxShadow: {
+    thumb: string;
+  };
+  tabsBoxShadow: {
+    indicator: string;
+  };
+  none: string;
+}
+
+const boxShadows: IBoxShadows = {
   xs: StyleFunctions.boxShadow([0, 2], [9, -5], black.main, 0.15),
   sm: StyleFunctions.boxShadow([0, 5], [10, 0], black.main, 0.12),
   md: `${StyleFunctions.boxShadow(

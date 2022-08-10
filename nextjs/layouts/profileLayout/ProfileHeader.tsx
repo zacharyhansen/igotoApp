@@ -1,26 +1,37 @@
 import { FunctionComponent } from 'react';
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import Tabs from '@mui/material/Tabs';
-import Avatar from '@mui/material/Avatar';
-
+import VoyAvatar from '../../components/muiStyled/VoyAvatar';
+import marie from '../../assets/images/marie.jpg';
+import Image from 'next/image';
+import VoyBox from '../../components/muiStyled/VoyBox';
+import { useCurrentUserContext } from '../../contexts/currentUserContext';
+import curved0 from '../../assets/images/curved0.jpg';
+import VoyTypography from '../../components/muiStyled/VoyTypography';
+import NavBarDashboard from '../../components/NavBarDashboard/NavBarDashboard';
 interface IProfileHeaderProps {}
 
 const ProfileHeader: FunctionComponent<IProfileHeaderProps> = () => {
+  const currentUser = useCurrentUserContext()?.currentUser;
   return (
-    <Box position="relative">
-      {/* <DashboardNavbar absolute light /> */}
-      <Box
+    <VoyBox position="relative">
+      <NavBarDashboard absolute light />
+      <VoyBox
         display="flex"
         alignItems="center"
         position="relative"
         minHeight="18.75rem"
         borderRadius="xl"
         sx={{
-          backgroundImage:
-            'linear-gradient(to bottom, rgba(245, 246, 252, 0.52), rgba(117, 19, 93, 0.73)), url(https://source.unsplash.com/random/?travel)',
+          backgroundImage: ({
+            functions: { rgba, linearGradient },
+            palette: { gradients }
+          }) =>
+            `${linearGradient(
+              rgba(gradients.info.main, 0.6),
+              rgba(gradients.info.state, 0.6)
+            )}, url(${curved0.src})`,
           backgroundSize: 'cover',
           backgroundPosition: '50%',
           overflow: 'hidden'
@@ -29,9 +40,9 @@ const ProfileHeader: FunctionComponent<IProfileHeaderProps> = () => {
       <Card
         sx={{
           backdropFilter: `saturate(200%) blur(30px)`,
-          // backgroundColor: ({ functions: { rgba }, palette: { white } }) =>
-          //   rgba(white.main, 0.8),
-          // boxShadow: ({ boxShadows: { navbarBoxShadow } }) => navbarBoxShadow,
+          backgroundColor: ({ functions: { rgba }, palette: { white } }) =>
+            rgba(white.main, 0.8),
+          boxShadow: ({ boxShadows: { navbarBoxShadow } }) => navbarBoxShadow,
           position: 'relative',
           mt: -8,
           mx: 3,
@@ -41,41 +52,30 @@ const ProfileHeader: FunctionComponent<IProfileHeaderProps> = () => {
       >
         <Grid container spacing={3} alignItems="center">
           <Grid item>
-            <Avatar
-              src={burceMars}
+            <VoyAvatar
+              src="test"
               alt="profile-image"
               variant="rounded"
               size="xl"
               shadow="sm"
-            />
+            >
+              <Image src={marie} alt={'test'} layout="fill" />
+            </VoyAvatar>
           </Grid>
           <Grid item>
-            <Box height="100%" mt={0.5} lineHeight={1}>
+            <VoyBox height="100%" mt={0.5} lineHeight={1}>
               <Typography variant="h5" fontWeight="medium">
-                Alex Thompson
+                {currentUser?.displayName}
               </Typography>
-              <Typography variant="button" color="text" fontWeight="medium">
-                CEO / Co-Founder
-              </Typography>
-            </Box>
+              <VoyTypography variant="button" color="text" fontWeight="medium">
+                {currentUser?.email}
+              </VoyTypography>
+            </VoyBox>
           </Grid>
-          <Grid item xs={12} md={6} lg={4} sx={{ ml: 'auto' }}>
-            {/* <AppBar position="static">
-              <Tabs
-                orientation={tabsOrientation}
-                value={tabValue}
-                onChange={handleSetTabValue}
-                sx={{ background: 'transparent' }}
-              >
-                <Tab label="App" icon={<Cube />} />
-                <Tab label="Message" icon={<Document />} />
-                <Tab label="Settings" icon={<Settings />} />
-              </Tabs>
-            </AppBar> */}
-          </Grid>
+          <Grid item xs={12} md={6} lg={4} sx={{ ml: 'auto' }}></Grid>
         </Grid>
       </Card>
-    </Box>
+    </VoyBox>
   );
 };
 

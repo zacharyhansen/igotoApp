@@ -7,7 +7,9 @@ import type { AppProps } from 'next/app';
 import { ThemeProvider } from '@mui/material/styles';
 import { auth } from '../config/firebase.config';
 import { CurrentUserProvider } from '../contexts/currentUserContext';
-import Theme from '../styling/Theme';
+import Theme from '../theme';
+import CssBaseline from '@mui/material/CssBaseline';
+
 export interface PageLayoutComponentInterface {
   children: JSX.Element | JSX.Element[];
 }
@@ -25,6 +27,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     <ThemeProvider theme={Theme}>
       <CurrentUserProvider auth={auth}>
         {/* Use the provided pagelayout if it has been attached to the page */}
+        <CssBaseline />
         {Component.PageLayout ? (
           <Component.PageLayout>
             <Component {...pageProps} />

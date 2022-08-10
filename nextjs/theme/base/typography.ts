@@ -1,5 +1,5 @@
 import colors from './colors';
-import StyleFunctions from './StyleFunctions';
+import functions from './functions';
 
 const { dark } = colors;
 
@@ -9,12 +9,12 @@ export const baseProperties = {
   fontWeightRegular: 400,
   fontWeightMedium: 500,
   fontWeightBold: 700,
-  fontSizeXXS: StyleFunctions.pxToRem(10.4),
-  fontSizeXS: StyleFunctions.pxToRem(12),
-  fontSizeSM: StyleFunctions.pxToRem(14),
-  fontSizeMD: StyleFunctions.pxToRem(16),
-  fontSizeLG: StyleFunctions.pxToRem(18),
-  fontSizeXL: StyleFunctions.pxToRem(20)
+  fontSizeXXS: functions.pxToRem(10.4),
+  fontSizeXS: functions.pxToRem(12),
+  fontSizeSM: functions.pxToRem(14),
+  fontSizeMD: functions.pxToRem(16),
+  fontSizeLG: functions.pxToRem(18),
+  fontSizeXL: functions.pxToRem(20)
 };
 
 const baseHeadingProperties = {
@@ -38,37 +38,37 @@ const typography = {
   fontWeightBold: baseProperties.fontWeightBold,
 
   h1: {
-    fontSize: StyleFunctions.pxToRem(48),
+    fontSize: functions.pxToRem(48),
     lineHeight: 1.25,
     ...baseHeadingProperties
   },
 
   h2: {
-    fontSize: StyleFunctions.pxToRem(36),
+    fontSize: functions.pxToRem(36),
     lineHeight: 1.3,
     ...baseHeadingProperties
   },
 
   h3: {
-    fontSize: StyleFunctions.pxToRem(30),
+    fontSize: functions.pxToRem(30),
     lineHeight: 1.375,
     ...baseHeadingProperties
   },
 
   h4: {
-    fontSize: StyleFunctions.pxToRem(24),
+    fontSize: functions.pxToRem(24),
     lineHeight: 1.375,
     ...baseHeadingProperties
   },
 
   h5: {
-    fontSize: StyleFunctions.pxToRem(20),
+    fontSize: functions.pxToRem(20),
     lineHeight: 1.375,
     ...baseHeadingProperties
   },
 
   h6: {
-    fontSize: StyleFunctions.pxToRem(16),
+    fontSize: functions.pxToRem(16),
     lineHeight: 1.625,
     ...baseHeadingProperties
   },
@@ -121,32 +121,32 @@ const typography = {
   },
 
   d1: {
-    fontSize: StyleFunctions.pxToRem(80),
+    fontSize: functions.pxToRem(80),
     ...baseDisplayProperties
   },
 
   d2: {
-    fontSize: StyleFunctions.pxToRem(72),
+    fontSize: functions.pxToRem(72),
     ...baseDisplayProperties
   },
 
   d3: {
-    fontSize: StyleFunctions.pxToRem(64),
+    fontSize: functions.pxToRem(64),
     ...baseDisplayProperties
   },
 
   d4: {
-    fontSize: StyleFunctions.pxToRem(56),
+    fontSize: functions.pxToRem(56),
     ...baseDisplayProperties
   },
 
   d5: {
-    fontSize: StyleFunctions.pxToRem(48),
+    fontSize: functions.pxToRem(48),
     ...baseDisplayProperties
   },
 
   d6: {
-    fontSize: StyleFunctions.pxToRem(40),
+    fontSize: functions.pxToRem(40),
     ...baseDisplayProperties
   },
 
