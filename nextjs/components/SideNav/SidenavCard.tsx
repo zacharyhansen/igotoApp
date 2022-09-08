@@ -2,12 +2,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Icon from '@mui/material/Icon';
 import { useUIController } from '../../contexts/uiContext';
-import {
-  cardContent,
-  cardIconBox,
-  cardIcon,
-  card
-} from '../../theme/components/sideNav/sidenavCard';
+import { cardContent, cardIconBox, cardIcon, card } from './styles/sidenavCard';
 import VoyBox from '../muiStyled/VoyBox';
 
 function SidenavCard() {

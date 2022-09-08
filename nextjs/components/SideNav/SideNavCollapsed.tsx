@@ -8,7 +8,7 @@ import {
   collapseIconBox,
   collapseIcon,
   collapseText
-} from '../../theme/components/sideNav/sidenavCollapse';
+} from './styles/sidenavCollapsed';
 import VoyBox from '../muiStyled/VoyBox';
 import { useUIController } from '../../contexts/uiContext';
 

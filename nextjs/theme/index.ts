@@ -15,6 +15,7 @@ import inputBase from './components/inputBase';
 import input from './components/input';
 import button from './components/button';
 import iconButton from './components/iconButton';
+import sidenav from './components/sidenav';
 
 export type VoyPaletteColor = SimplePaletteColorOptions & { focus?: string };
 interface MyThemeExtensions {
@@ -77,7 +78,7 @@ export default createTheme({
         ...container
       }
     },
-    // MuiDrawer: { ...sidenav },
+    MuiDrawer: { ...sidenav },
     // MuiList: { ...list },
     // MuiListItem: { ...listItem },
     // MuiListItemText: { ...listItemText },

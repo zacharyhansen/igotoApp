@@ -59,7 +59,7 @@ const ProfileHeader: FunctionComponent<IProfileHeaderProps> = () => {
               size="xl"
               shadow="sm"
             >
-              <Image src={marie} alt={'test'} layout="fill" />
+              <Image src={marie} alt="me" layout="fill" />
             </VoyAvatar>
           </Grid>
           <Grid item>

@@ -6,14 +6,14 @@ import Link from 'next/link';
 import Icon from '@mui/material/Icon';
 import SidenavCollapsed from './SideNavCollapsed';
 import SidenavRoot from './SidenavRoot';
-import sidenavLogoLabel from '../../theme/components/sideNav/sidenav';
+import sidenavLogoLabel from './styles/sidenav';
 import VoyBox from '../muiStyled/VoyBox';
 import VoyTypography from '../muiStyled/VoyTypography';
 import { setMiniSidenav, useUIController } from '../../contexts/uiContext';
 import { useRouter } from 'next/router';
 import { FunctionComponent } from 'react';
 import AdbIcon from '@mui/icons-material/Adb';
-import Image from 'mui-image';
+import Image from 'next/image';
 
 const routes = [
   {
@@ -120,9 +120,13 @@ const Sidenav: FunctionComponent<ISideNavProps> = props => {
         </VoyBox>
         <Link href="/">
           <VoyBox display="flex" alignItems="center">
-            {/* <Image src={'assets/images/logo-ct.png'} /> */}
+            <Image src={'/logo-ct.png'} height="30rem" width="30rem" />
             <VoyBox sx={theme => sidenavLogoLabel(theme, miniSidenav)}>
-              <VoyTypography variant="button" fontWeight="medium">
+              <VoyTypography
+                component="h6"
+                variant="button"
+                fontWeight="medium"
+              >
                 Voyame
               </VoyTypography>
             </VoyBox>

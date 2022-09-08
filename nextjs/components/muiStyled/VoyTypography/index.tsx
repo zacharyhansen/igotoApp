@@ -17,18 +17,10 @@ interface IVoyTypographyProps extends TypographyProps {
   verticalAlign?: validVerticalAlign;
   textGradient?: boolean;
   opacity?: number;
+  component?: React.ElementType;
 }
 
-const VoyTypography = styled(Typography)<
-  TypographyProps & {
-    color?: validColorTypograpghy;
-    textTransform?: validTextTransform;
-    fontWeight?: validFontWeight;
-    verticalAlign?: validVerticalAlign;
-    textGradient?: boolean;
-    opacity?: number;
-  }
->(
+const VoyTypography = styled(Typography)<IVoyTypographyProps>(
   ({
     theme,
     color = 'dark',
