@@ -13,7 +13,7 @@ import {
   validColorsSet,
   validGradientsSet,
   validPaletteColor
-} from '../../theme/base/colors';
+} from '../../../theme/base/colors';
 
 interface IVoyBoxProps extends BoxProps {
   variant?: 'contained' | 'gradient';
@@ -24,7 +24,7 @@ interface IVoyBoxProps extends BoxProps {
   shadow?: validBoxShadows;
 }
 
-const VoyBox = styled(Box)<IVoyBoxProps>(
+export default styled(Box)<IVoyBoxProps>(
   ({
     theme,
     variant = 'contained',
@@ -82,5 +82,3 @@ const VoyBox = styled(Box)<IVoyBoxProps>(
     };
   }
 );
-
-export default VoyBox;

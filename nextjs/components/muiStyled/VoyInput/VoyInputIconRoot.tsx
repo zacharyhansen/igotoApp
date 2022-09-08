@@ -8,8 +8,6 @@ interface IVoyInputIconRootProps extends IconProps {
 const VoyInputIconRoot = styled(Icon)<IVoyInputIconRootProps>(
   ({ theme, iconSize = 'medium' }) => {
     const { typography } = theme;
-    console.log('typo', typography);
-    // @ts-ignore
     const { fontWeightBold, size: fontSize } = typography;
 
     return {

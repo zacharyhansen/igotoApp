@@ -182,8 +182,14 @@ const colors = {
     default: '#f8f9fa'
   },
 
+  textColor: {
+    main: '#67748e',
+    focus: '#67748e'
+  },
+
   transparent: {
-    main: 'transparent'
+    main: 'transparent',
+    focus: 'transparent'
   },
 
   white: {

@@ -53,7 +53,7 @@ const ProfileHeader: FunctionComponent<IProfileHeaderProps> = () => {
         <Grid container spacing={3} alignItems="center">
           <Grid item>
             <VoyAvatar
-              src="test"
+              // src="test"
               alt="profile-image"
               variant="rounded"
               size="xl"

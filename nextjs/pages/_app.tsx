@@ -7,6 +7,7 @@ import type { AppProps } from 'next/app';
 import { ThemeProvider } from '@mui/material/styles';
 import { auth } from '../config/firebase.config';
 import { CurrentUserProvider } from '../contexts/currentUserContext';
+import { UIControllerProvider } from '../contexts/uiContext';
 import Theme from '../theme';
 import CssBaseline from '@mui/material/CssBaseline';
 
@@ -21,21 +22,21 @@ type AppPropsWithLayout = AppProps & {
 };
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  // authHook();
-
   return (
     <ThemeProvider theme={Theme}>
-      <CurrentUserProvider auth={auth}>
-        {/* Use the provided pagelayout if it has been attached to the page */}
-        <CssBaseline />
-        {Component.PageLayout ? (
-          <Component.PageLayout>
+      <UIControllerProvider>
+        <CurrentUserProvider auth={auth}>
+          {/* Use the provided pagelayout if it has been attached to the page */}
+          <CssBaseline />
+          {Component.PageLayout ? (
+            <Component.PageLayout>
+              <Component {...pageProps} />
+            </Component.PageLayout>
+          ) : (
             <Component {...pageProps} />
-          </Component.PageLayout>
-        ) : (
-          <Component {...pageProps} />
-        )}
-      </CurrentUserProvider>
+          )}
+        </CurrentUserProvider>
+      </UIControllerProvider>
     </ThemeProvider>
   );
 }

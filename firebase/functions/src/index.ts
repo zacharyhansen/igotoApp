@@ -21,7 +21,6 @@ export const createUserDocument = functions.auth.user().onCreate(user => {
       db.collection('users')
         .doc(user.uid)
         .set(JSON.parse(JSON.stringify(user)));
-      console.log('here: ', JSON.parse(JSON.stringify(user)));
     })
     .catch((error: Error) => {
       console.log('Error fetching user data:', error);

@@ -12,7 +12,11 @@ import globals from './base/globals';
 import container from './components/container';
 import breakpoints from './base/breakpoints';
 import inputBase from './components/inputBase';
+import input from './components/input';
+import button from './components/button';
+import iconButton from './components/iconButton';
 
+export type VoyPaletteColor = SimplePaletteColorOptions & { focus?: string };
 interface MyThemeExtensions {
   functions: IFunctions;
   borders: IBorders;
@@ -20,12 +24,12 @@ interface MyThemeExtensions {
 }
 
 interface MyPaletteExtensions {
-  white: SimplePaletteColorOptions;
-  black: SimplePaletteColorOptions;
-  text: SimplePaletteColorOptions;
-  light: SimplePaletteColorOptions;
-  dark: SimplePaletteColorOptions;
-  transparent: { main: string };
+  white: VoyPaletteColor;
+  black: VoyPaletteColor;
+  textColor: VoyPaletteColor;
+  light: VoyPaletteColor;
+  dark: VoyPaletteColor;
+  transparent: VoyPaletteColor;
   gradients: { [key in validGradient]: IGradient };
   inputColors: {
     borderColor: {
@@ -80,8 +84,8 @@ export default createTheme({
     MuiCard: { ...card },
     MuiCardMedia: { ...cardMedia },
     MuiCardContent: { ...cardContent },
-    // MuiButton: { ...button },
-    // MuiIconButton: { ...iconButton },
+    MuiButton: { ...button },
+    MuiIconButton: { ...iconButton },
     MuiInputBase: { ...inputBase },
     // MuiMenu: { ...menu },
     // MuiMenuItem: { ...menuItem },
@@ -93,7 +97,7 @@ export default createTheme({
     // MuiLinearProgress: { ...linearProgress },
     // MuiBreadcrumbs: { ...breadcrumbs },
     // MuiSlider: { ...slider },
-    MuiAvatar: { ...avatar }
+    MuiAvatar: { ...avatar },
     // MuiTooltip: { ...tooltip },
     // MuiAppBar: { ...appBar },
     // MuiTabs: { ...tabs },
@@ -109,9 +113,9 @@ export default createTheme({
     // MuiCheckbox: { ...checkbox },
     // MuiRadio: { ...radio },
     // MuiAutocomplete: { ...autocomplete },
-    // MuiInput: { ...input },
-    // MuiOutlinedInput: { ...input },
-    // MuiFilledInput: { ...input },
+    MuiInput: { ...input },
+    MuiOutlinedInput: { ...input },
+    MuiFilledInput: { ...input }
     // MuiPopover: { ...popover },
     // MuiButtonBase: { ...buttonBase },
     // MuiIcon: { ...icon },

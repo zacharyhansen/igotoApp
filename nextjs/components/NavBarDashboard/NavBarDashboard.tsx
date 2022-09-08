@@ -14,12 +14,10 @@ import {
 } from './NavBarDashboardStyles';
 import Breadcrumbs from '../BreadCrumbs/BreadCrumbs';
 import { useRouter } from 'next/router';
-import VoyTypography from '../muiStyled/VoyTypography';
-import Link from 'next/link';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
-import { Dashboard, Settings } from '@mui/icons-material';
+import { Settings } from '@mui/icons-material';
 
 export interface INavBarDashboardProps {
   absolute: boolean;
@@ -34,7 +32,6 @@ const NavBarDashboard: FunctionComponent<INavBarDashboardProps> = ({
 }) => {
   const [transparentNavbar, setTransparentNavbar] = useState<boolean>(true);
   const routes = useRouter().pathname.split('/').slice(1);
-  console.log('routes', routes);
   // TODO: this var handlers the mobile phone layout and needs to be immpmeneted for this layout
   const miniSidenav = false;
   useEffect(() => {

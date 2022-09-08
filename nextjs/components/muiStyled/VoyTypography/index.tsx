@@ -7,7 +7,7 @@ import {
   validPaletteColor,
   validTextTransform,
   validVerticalAlign
-} from '../../theme/base/colors';
+} from '../../../theme/base/colors';
 import { useMemo } from 'react';
 
 interface IVoyTypographyProps extends TypographyProps {

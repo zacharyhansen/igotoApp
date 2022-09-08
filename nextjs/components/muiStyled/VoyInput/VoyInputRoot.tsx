@@ -21,7 +21,6 @@ export default styled(InputBase, {
   const { size: fontSize } = typography;
   const { borderRadius } = borders;
 
-  // styles for the input with size="small"
   const smallStyles = useMemo(
     () => ({
       fontSize: fontSize.xs,

@@ -1,8 +1,8 @@
-import StyleFunctions from '../../theme/base/functions';
+import StyleFunctions from '../../../theme/base/functions';
 import { styled } from '@mui/material/styles';
 import Avatar, { AvatarProps } from '@mui/material/Avatar';
 import { useMemo } from 'react';
-import { validColor, validGradient } from '../../theme/base/colors';
+import { validColor, validGradient } from '../../../theme/base/colors';
 
 interface IVoyAvatarProps extends AvatarProps {
   size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';

@@ -1,0 +1,122 @@
+import { Theme } from '@mui/material';
+import { validPaletteColor } from '../../../theme/base/colors';
+
+const collapseItem = (theme: Theme, active?: boolean) => {
+  const { palette, transitions, breakpoints, boxShadows, borders, functions } =
+    theme;
+
+  const { dark, white, textColor } = palette;
+  const { borderRadius } = borders;
+  const { pxToRem } = functions;
+
+  return {
+    background: white.main,
+    color: active ? dark.main : textColor.main,
+    display: 'flex',
+    alignItems: 'center',
+    width: '100%',
+    padding: `${pxToRem(10.8)} ${pxToRem(12.8)} ${pxToRem(10.8)} ${pxToRem(
+      16
+    )}`,
+    margin: `0 ${pxToRem(16)}`,
+    borderRadius: borderRadius.md,
+    cursor: 'pointer',
+    userSelect: 'none',
+    whiteSpace: 'nowrap',
+    boxShadow: 'none',
+    [breakpoints.up('xl')]: {
+      boxShadow: 'none',
+      transition: transitions.create('box-shadow', {
+        easing: transitions.easing.easeInOut,
+        duration: transitions.duration.shorter
+      })
+    }
+  };
+};
+
+const collapseIconBox = (
+  theme: Theme,
+  active: boolean,
+  color: validPaletteColor | 'default'
+) => {
+  const { palette, transitions, breakpoints, boxShadows, borders, functions } =
+    theme;
+  const { white, info, light, gradients } = palette;
+  const { md } = boxShadows;
+  const { borderRadius } = borders;
+  const { pxToRem } = functions;
+
+  return {
+    background: () => {
+      if (active) {
+        return color === 'default'
+          ? info.main
+          : palette[color as validPaletteColor].main;
+      }
+
+      return light.main;
+    },
+    minWidth: pxToRem(32),
+    minHeight: pxToRem(32),
+    borderRadius: borderRadius.md,
+    display: 'grid',
+    placeItems: 'center',
+    boxShadow: md,
+    transition: transitions.create('margin', {
+      easing: transitions.easing.easeInOut,
+      duration: transitions.duration.standard
+    }),
+
+    [breakpoints.up('xl')]: {
+      background: () => {
+        let background;
+        if (!active) {
+          background = light.main;
+        } else if (color === 'default') {
+          background = info.main;
+        } else if (color === 'warning') {
+          background = gradients.warning.main;
+        } else {
+          background = palette[color].main;
+        }
+        return background;
+      }
+    },
+
+    '& svg, svg g': {
+      fill: active ? white.main : gradients.dark.state
+    }
+  };
+};
+
+const collapseIcon = (theme: Theme, active: boolean) => ({
+  color: active ? theme.palette.white.main : theme.palette.gradients.dark.state
+});
+
+const collapseText = (theme: Theme, miniSidenav: boolean, active: boolean) => {
+  const { typography, transitions, breakpoints, functions } = theme;
+  const { size, fontWeightMedium, fontWeightRegular } = typography;
+  const { pxToRem } = functions;
+
+  return {
+    marginLeft: pxToRem(12.8),
+
+    [breakpoints.up('xl')]: {
+      opacity: miniSidenav ? 0 : 1,
+      maxWidth: miniSidenav ? 0 : '100%',
+      marginLeft: miniSidenav ? 0 : pxToRem(12.8),
+      transition: transitions.create(['opacity', 'margin'], {
+        easing: transitions.easing.easeInOut,
+        duration: transitions.duration.standard
+      })
+    },
+
+    '& span': {
+      fontWeight: active ? fontWeightMedium : fontWeightRegular,
+      fontSize: size.sm,
+      lineHeight: 0
+    }
+  };
+};
+
+export { collapseItem, collapseIconBox, collapseIcon, collapseText };

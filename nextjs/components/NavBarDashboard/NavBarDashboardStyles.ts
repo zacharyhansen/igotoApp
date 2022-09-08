@@ -1,5 +1,4 @@
 import { Breakpoints, Theme } from '@mui/material';
-import { IDashboardNavbarProps } from './NavBarDashboard';
 
 function navbar(
   theme: Theme,

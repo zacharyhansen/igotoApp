@@ -7,7 +7,6 @@ const onAuthStateChangedObserver = (
   handleUserLoggedOut: () => void
 ) => {
   onAuthStateChanged(auth, user => {
-    console.log('auth: ', 'obersver ran');
     setCurrentUser(user);
     if (user) {
       // User is signed in, see docs for a list of available properties

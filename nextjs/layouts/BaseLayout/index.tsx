@@ -1,21 +1,16 @@
-import { useState, useCallback, Fragment } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
-import Container from '@mui/material/Container';
-import Header from './Header';
-import Drawer from '../../components/Drawers/Drawer';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Dashboard, Settings } from '@mui/icons-material';
 import DrawerTemporary from '../../components/Drawers/DrawerTempory';
 import ListItems from '../../components/ListItems/ListItems';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { firebaseSignOut } from '../../config/firebase.config';
 import CloseIcon from '@mui/icons-material/Close';
-import { routes } from '../../constants/routes';
+import SideNav from 'components/SideNav';
+import { useRouter } from 'next/router';
+import VoyBox from 'components/muiStyled/VoyBox';
+import { setLayout, useUIController } from 'contexts/uiContext';
 
 interface BaseLayoutProps {
   children: JSX.Element | JSX.Element[];
@@ -23,118 +18,78 @@ interface BaseLayoutProps {
 
 const BaseLayout = ({ children }: BaseLayoutProps) => {
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const pathname = useRouter().pathname;
+  const { state, dispatch } = useUIController();
 
   const handleSettingsToggle = useCallback(() => {
     setSettingsOpen(!settingsOpen);
   }, [settingsOpen]);
 
-  return (
-    <Fragment>
-      <DrawerTemporary
-        title="Settingsw Drawer"
-        anchor="right"
-        open={settingsOpen}
-        onToggleDrawer={handleSettingsToggle}
-        variant="persistent"
-      >
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="baseline"
-          pt={2}
-          pb={0.8}
-          px={2}
-        >
-          <Box display="flex" alignItems="center">
-            <Typography variant="h5">Settings</Typography>
-          </Box>
+  useEffect(() => {
+    setLayout(dispatch, 'dashboard');
+  }, [pathname]);
 
-          <IconButton
-            color="primary"
-            aria-label="upload picture"
-            component="label"
-            onClick={handleSettingsToggle}
+  return (
+    <VoyBox>
+      <>
+        <SideNav />
+        <DrawerTemporary
+          title="Settingsw Drawer"
+          anchor="right"
+          open={settingsOpen}
+          onToggleDrawer={handleSettingsToggle}
+          variant="persistent"
+        >
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="baseline"
+            pt={2}
+            pb={0.8}
+            px={2}
           >
-            <CloseIcon />
-          </IconButton>
-        </Box>
-        <ListItems
-          asButtons={true}
-          listItems={[
-            {
-              primaryText: 'Sign out',
-              primaryIcon: <LogoutIcon />,
-              primaryAction: firebaseSignOut()
-            }
-          ]}
-        />
-      </DrawerTemporary>
-      <Box sx={{ display: 'flex' }}>
-        <Header position="absolute" open={true}>
-          <Toolbar
-            sx={{
-              pr: '24px' // keep right padding when drawer closed
-            }}
-          >
-            <Typography
-              component="h1"
-              variant="h6"
-              color="inherit"
-              noWrap
-              sx={{ flexGrow: 1 }}
+            <Box display="flex" alignItems="center">
+              <Typography variant="h5">Settings</Typography>
+            </Box>
+
+            <IconButton
+              color="primary"
+              aria-label="upload picture"
+              component="label"
+              onClick={handleSettingsToggle}
             >
-              Dashboard
-            </Typography>
-            <IconButton onClick={handleSettingsToggle} color="inherit">
-              <Badge color="secondary">
-                <Settings />
-              </Badge>
+              <CloseIcon />
             </IconButton>
-          </Toolbar>
-        </Header>
-        <Drawer id="1" variant="permanent" open={true}>
-          <Toolbar
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              px: [1]
-            }}
-          ></Toolbar>
-          <Divider />
+          </Box>
           <ListItems
             asButtons={true}
             listItems={[
               {
-                primaryText: 'Dashboard',
-                primaryIcon: <Dashboard />,
-                link: routes.DASHBOARD
-              },
-              {
-                primaryText: 'Profile',
-                primaryIcon: <AccountCircleIcon />,
-                link: routes.PROFILE
+                primaryText: 'Sign out',
+                primaryIcon: <LogoutIcon />,
+                primaryAction: firebaseSignOut()
               }
             ]}
           />
-        </Drawer>
-        <Box
-          component="main"
-          sx={{
-            backgroundColor: theme =>
-              theme.palette.mode === 'light'
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
-            flexGrow: 1,
-            height: '100vh',
-            overflow: 'auto'
-          }}
-        >
-          <Toolbar />
-          {children}
-        </Box>
-      </Box>
-    </Fragment>
+        </DrawerTemporary>
+      </>
+      <VoyBox
+        sx={({ breakpoints, transitions, functions: { pxToRem } }) => ({
+          p: 3,
+          position: 'relative',
+
+          [breakpoints.up('xl')]: {
+            marginLeft: state.miniSidenav ? pxToRem(120) : pxToRem(274),
+            transition: transitions.create(['margin-left', 'margin-right'], {
+              easing: transitions.easing.easeInOut,
+              duration: transitions.duration.standard
+            })
+          }
+        })}
+      >
+        {children}
+      </VoyBox>
+    </VoyBox>
   );
 };
 

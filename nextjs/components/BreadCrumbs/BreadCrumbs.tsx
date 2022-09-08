@@ -38,6 +38,7 @@ const Breadcrumbs: FunctionComponent<IBreadcrumbsProps> = ({
         {route.map((el, i) =>
           i == route.length - 1 ? (
             <VoyTypography
+              key={el}
               variant="button"
               fontWeight="regular"
               textTransform="capitalize"
