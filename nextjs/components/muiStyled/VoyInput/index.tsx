@@ -12,7 +12,7 @@ interface IVoyInputProps {
   disabled: boolean;
 }
 
-export default forwardRef<HTMLDivElement, IVoyInputProps>(
+const VoyInput = forwardRef<HTMLDivElement, IVoyInputProps>(
   (
     { size, icon, success, iconDirection = 'left', error, disabled, ...rest },
     ref
@@ -66,3 +66,7 @@ export default forwardRef<HTMLDivElement, IVoyInputProps>(
     }
   }
 );
+
+VoyInput.displayName = 'VoyInput';
+
+export default VoyInput;
