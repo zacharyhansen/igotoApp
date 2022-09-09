@@ -9,14 +9,13 @@ import VoyBox from '../../components/muiStyled/VoyBox';
 import { useCurrentUserContext } from '../../contexts/currentUserContext';
 import curved0 from '../../assets/images/curved0.jpg';
 import VoyTypography from '../../components/muiStyled/VoyTypography';
-import NavBarDashboard from '../../components/NavBarDashboard/NavBarDashboard';
+
 interface IProfileHeaderProps {}
 
 const ProfileHeader: FunctionComponent<IProfileHeaderProps> = () => {
   const currentUser = useCurrentUserContext()?.currentUser;
   return (
     <VoyBox position="relative">
-      <NavBarDashboard absolute light />
       <VoyBox
         display="flex"
         alignItems="center"

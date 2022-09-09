@@ -1,11 +1,11 @@
 import { Breakpoints, Theme } from '@mui/material';
 
-function navbar(
+const navbar = (
   theme: Theme,
   transparentNavbar: boolean,
   absolute: boolean,
   light: boolean
-) {
+) => {
   const { palette, boxShadows, functions, transitions, breakpoints, borders } =
     theme;
   const { dark, white, text, transparent } = palette;
@@ -38,12 +38,11 @@ function navbar(
       return color;
     },
     top: absolute ? 0 : pxToRem(12),
-    minHeight: pxToRem(75),
+    minHeight: pxToRem(60),
     display: 'grid',
     alignItems: 'center',
     borderRadius: borderRadius.xl,
-    paddingTop: pxToRem(8),
-    paddingBottom: pxToRem(8),
+    paddingBottom: pxToRem(4),
     paddingRight: absolute ? pxToRem(8) : 0,
     paddingLeft: absolute ? pxToRem(16) : 0,
 
@@ -65,32 +64,30 @@ function navbar(
       }
     }
   };
-}
+};
 
 const navbarContainer = ({ breakpoints }: { breakpoints: Breakpoints }) => ({
-  flexDirection: 'column',
-  alignItems: 'flex-start',
+  flexDirection: 'row',
+  alignItems: 'center',
   justifyContent: 'space-between',
   pt: 0.5,
   pb: 0.5,
 
   [breakpoints.up('md')]: {
-    flexDirection: 'row',
-    alignItems: 'center',
     paddingTop: '0',
     paddingBottom: '0'
   }
 });
 
-const navbarRow = (theme: Theme, isMini: boolean) => ({
+const navbarRow = (theme: Theme) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
   width: '100%',
 
   [theme.breakpoints.up('md')]: {
-    justifyContent: isMini ? 'space-between' : 'stretch',
-    width: isMini ? '100%' : 'max-content'
+    justifyContent: 'stretch',
+    width: 'max-content'
   },
 
   [theme.breakpoints.up('xl')]: {

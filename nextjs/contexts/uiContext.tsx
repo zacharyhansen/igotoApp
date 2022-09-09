@@ -2,21 +2,11 @@ import { createContext, useContext, useReducer, useMemo, Reducer } from 'react';
 
 interface IUIContext {
   miniSidenav: boolean;
-  transparentSidenav: boolean;
-  sidenavColor: 'info';
-  transparentNavbar: boolean;
-  fixedNavbar: boolean;
-  openConfigurator: boolean;
   layout: 'dashboard';
 }
 
 const initialUIContext: IUIContext = {
   miniSidenav: false,
-  transparentSidenav: true,
-  sidenavColor: 'info',
-  transparentNavbar: true,
-  fixedNavbar: true,
-  openConfigurator: false,
   layout: 'dashboard'
 };
 
@@ -32,12 +22,8 @@ export enum ReducerActionType {
   MINI_SIDENAV,
   LAYOUT
 }
-export type Todo = {
-  id: string;
-  name: string;
-  completed: boolean;
-};
-export type ReducerAction = {
+
+type ReducerAction = {
   type: ReducerActionType;
   payload?: any;
 };
@@ -47,8 +33,11 @@ const reducer: Reducer<IUIContext, ReducerAction> = (
   action: any
 ) => {
   switch (action.type) {
-    case 'MINI_SIDENAV': {
+    case ReducerActionType.MINI_SIDENAV: {
       return { ...state, miniSidenav: action.value };
+    }
+    case ReducerActionType.LAYOUT: {
+      return { ...state, layout: action.value };
     }
     default: {
       return state;

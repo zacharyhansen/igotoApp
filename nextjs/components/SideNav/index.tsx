@@ -1,5 +1,4 @@
 import { useCallback, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import Link from 'next/link';
@@ -14,6 +13,8 @@ import { useRouter } from 'next/router';
 import { FunctionComponent } from 'react';
 import AdbIcon from '@mui/icons-material/Adb';
 import Image from 'next/image';
+import logoSVG from 'assets/svgs/logo.svg';
+import CloseIcon from '@mui/icons-material/Close';
 
 const routes = [
   {
@@ -45,12 +46,14 @@ interface ISideNavProps {}
 const Sidenav: FunctionComponent<ISideNavProps> = props => {
   const { state, dispatch } = useUIController();
   const { miniSidenav } = state;
-  const collapseName = useRouter().pathname.split('/').slice(1)[0];
+  const pathname = useRouter().pathname;
+  const collapseName = pathname.split('/').slice(1)[0];
   const closeSidenav = useCallback(() => setMiniSidenav(dispatch, true), []);
 
   useEffect(() => {
-    const handleMiniSidenav = () =>
+    const handleMiniSidenav = () => {
       setMiniSidenav(dispatch, window.innerWidth < 1200);
+    };
 
     /** 
      The event listener that's calling the handleMiniSidenav function when resizing the window.
@@ -62,7 +65,7 @@ const Sidenav: FunctionComponent<ISideNavProps> = props => {
 
     // Remove event listener on cleanup
     return () => window.removeEventListener('resize', handleMiniSidenav);
-  }, []);
+  }, [dispatch, pathname]);
 
   // Render all the routes from the routes.js (All the visible items on the Sidenav)
   const renderRoutes = routes.map(
@@ -115,12 +118,14 @@ const Sidenav: FunctionComponent<ISideNavProps> = props => {
           sx={{ cursor: 'pointer' }}
         >
           <VoyTypography variant="h6" color="secondary">
-            <Icon sx={{ fontWeight: 'bold' }}>close</Icon>
+            <Icon sx={{ fontWeight: 'bold' }}>
+              <CloseIcon />
+            </Icon>
           </VoyTypography>
         </VoyBox>
         <Link href="/">
           <VoyBox display="flex" alignItems="center">
-            <Image src={'/logo-ct.png'} height="30rem" width="30rem" />
+            <Image src={logoSVG} height="25rem" width="25rem" />
             <VoyBox sx={theme => sidenavLogoLabel(theme, miniSidenav)}>
               <VoyTypography
                 component="h6"

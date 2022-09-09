@@ -16,6 +16,7 @@ import input from './components/input';
 import button from './components/button';
 import iconButton from './components/iconButton';
 import sidenav from './components/sidenav';
+import divider from './components/divider';
 
 export type VoyPaletteColor = SimplePaletteColorOptions & { focus?: string };
 interface MyThemeExtensions {
@@ -91,7 +92,7 @@ export default createTheme({
     // MuiMenu: { ...menu },
     // MuiMenuItem: { ...menuItem },
     // MuiSwitch: { ...switchButton },
-    // MuiDivider: { ...divider },
+    MuiDivider: { ...divider },
     // MuiTableContainer: { ...tableContainer },
     // MuiTableHead: { ...tableHead },
     // MuiTableCell: { ...tableCell },

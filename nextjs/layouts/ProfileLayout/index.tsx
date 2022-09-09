@@ -1,5 +1,5 @@
 import { Card, Grid } from '@mui/material';
-import { FunctionComponent, Fragment } from 'react';
+import { FunctionComponent } from 'react';
 import VoyBox from '../../components/muiStyled/VoyBox';
 import ProfileHeader from './ProfileHeader';
 
@@ -9,7 +9,6 @@ const ProfileLayout: FunctionComponent<IProfileLayoutProps> = () => {
   return (
     <VoyBox
       sx={({ breakpoints, transitions, functions: { pxToRem } }) => ({
-        p: 3,
         position: 'relative',
         [breakpoints.up('xl')]: {
           // marginLeft: miniSidenav ? pxToRem(120) : pxToRem(274),

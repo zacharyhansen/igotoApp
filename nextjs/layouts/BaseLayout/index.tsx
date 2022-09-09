@@ -11,6 +11,7 @@ import SideNav from 'components/SideNav';
 import { useRouter } from 'next/router';
 import VoyBox from 'components/muiStyled/VoyBox';
 import { setLayout, useUIController } from 'contexts/uiContext';
+import NavBarDashboard from 'components/NavBarDashboard';
 
 interface BaseLayoutProps {
   children: JSX.Element | JSX.Element[];
@@ -31,51 +32,50 @@ const BaseLayout = ({ children }: BaseLayoutProps) => {
 
   return (
     <VoyBox>
-      <>
-        <SideNav />
-        <DrawerTemporary
-          title="Settingsw Drawer"
-          anchor="right"
-          open={settingsOpen}
-          onToggleDrawer={handleSettingsToggle}
-          variant="persistent"
+      <SideNav />
+      <DrawerTemporary
+        title="Settingsw Drawer"
+        anchor="right"
+        open={settingsOpen}
+        onToggleDrawer={handleSettingsToggle}
+        variant="persistent"
+      >
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="baseline"
+          pt={2}
+          pb={0.8}
+          px={2}
         >
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="baseline"
-            pt={2}
-            pb={0.8}
-            px={2}
-          >
-            <Box display="flex" alignItems="center">
-              <Typography variant="h5">Settings</Typography>
-            </Box>
-
-            <IconButton
-              color="primary"
-              aria-label="upload picture"
-              component="label"
-              onClick={handleSettingsToggle}
-            >
-              <CloseIcon />
-            </IconButton>
+          <Box display="flex" alignItems="center">
+            <Typography variant="h5">Settings</Typography>
           </Box>
-          <ListItems
-            asButtons={true}
-            listItems={[
-              {
-                primaryText: 'Sign out',
-                primaryIcon: <LogoutIcon />,
-                primaryAction: firebaseSignOut()
-              }
-            ]}
-          />
-        </DrawerTemporary>
-      </>
+
+          <IconButton
+            color="primary"
+            aria-label="upload picture"
+            component="label"
+            onClick={handleSettingsToggle}
+          >
+            <CloseIcon />
+          </IconButton>
+        </Box>
+        <ListItems
+          asButtons={true}
+          listItems={[
+            {
+              primaryText: 'Sign out',
+              primaryIcon: <LogoutIcon />,
+              primaryAction: firebaseSignOut()
+            }
+          ]}
+        />
+      </DrawerTemporary>
       <VoyBox
         sx={({ breakpoints, transitions, functions: { pxToRem } }) => ({
-          p: 3,
+          px: 2,
+          py: 1,
           position: 'relative',
 
           [breakpoints.up('xl')]: {
@@ -87,6 +87,7 @@ const BaseLayout = ({ children }: BaseLayoutProps) => {
           }
         })}
       >
+        <NavBarDashboard handleSettingsToggle={handleSettingsToggle} />
         {children}
       </VoyBox>
     </VoyBox>
