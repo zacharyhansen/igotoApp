@@ -4,9 +4,10 @@ import { VoyPaletteColor } from '../../../theme';
 import { validPaletteColor } from '../../../theme/base/colors';
 
 export interface IVoyButtonProps extends ButtonProps {
-  circular: boolean;
-  iconOnly: boolean;
+  circular?: boolean;
+  iconOnly?: boolean;
 }
+
 export default styled(Button)<IVoyButtonProps>(
   ({
     theme,

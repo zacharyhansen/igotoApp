@@ -69,7 +69,7 @@ export type validGradient =
 
 export type validFontWeight = 'light' | 'regular' | 'medium' | 'bold';
 
-export type validColorTypograpghy =
+export type validColorTypography =
   | 'inherit'
   | 'primary'
   | 'secondary'
@@ -79,7 +79,7 @@ export type validColorTypograpghy =
   | 'error'
   | 'light'
   | 'dark'
-  | 'text'
+  | 'textColor'
   | 'white';
 
 export type validVerticalAlign =

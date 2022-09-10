@@ -1,7 +1,7 @@
 import Typography, { TypographyProps } from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import {
-  validColorTypograpghy,
+  validColorTypography,
   validFontWeight,
   validGradient,
   validPaletteColor,
@@ -11,7 +11,7 @@ import {
 import { useMemo } from 'react';
 
 interface IVoyTypographyProps extends TypographyProps {
-  color?: validColorTypograpghy;
+  color?: validColorTypography;
   textTransform?: validTextTransform;
   fontWeight?: validFontWeight;
   verticalAlign?: validVerticalAlign;

@@ -5,7 +5,7 @@ import { useMemo } from 'react';
 import { validColor, validGradient } from '../../../theme/base/colors';
 
 interface IVoyAvatarProps extends AvatarProps {
-  size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
   bgColor?: validColor;
   shadow?: 'none' | 'sm' | 'none';
 }

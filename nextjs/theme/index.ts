@@ -17,6 +17,14 @@ import button from './components/button';
 import iconButton from './components/iconButton';
 import sidenav from './components/sidenav';
 import divider from './components/divider';
+import appBar from './components/appbar';
+import tabs from './components/tabs';
+import tab from './components/tab';
+import base from './components/button/base';
+import menu from './components/menu';
+import menuItem from './components/menuItem';
+import tooltip from './components/tooltip';
+import icon from './components/icon';
 
 export type VoyPaletteColor = SimplePaletteColorOptions & { focus?: string };
 interface MyThemeExtensions {
@@ -89,8 +97,8 @@ export default createTheme({
     MuiButton: { ...button },
     MuiIconButton: { ...iconButton },
     MuiInputBase: { ...inputBase },
-    // MuiMenu: { ...menu },
-    // MuiMenuItem: { ...menuItem },
+    MuiMenu: { ...menu },
+    MuiMenuItem: { ...menuItem },
     // MuiSwitch: { ...switchButton },
     MuiDivider: { ...divider },
     // MuiTableContainer: { ...tableContainer },
@@ -100,10 +108,10 @@ export default createTheme({
     // MuiBreadcrumbs: { ...breadcrumbs },
     // MuiSlider: { ...slider },
     MuiAvatar: { ...avatar },
-    // MuiTooltip: { ...tooltip },
-    // MuiAppBar: { ...appBar },
-    // MuiTabs: { ...tabs },
-    // MuiTab: { ...tab },
+    MuiTooltip: { ...tooltip },
+    MuiAppBar: { ...appBar },
+    MuiTabs: { ...tabs },
+    MuiTab: { ...tab },
     // MuiStepper: { ...stepper },
     // MuiStep: { ...step },
     // MuiStepConnector: { ...stepConnector },
@@ -117,10 +125,10 @@ export default createTheme({
     // MuiAutocomplete: { ...autocomplete },
     MuiInput: { ...input },
     MuiOutlinedInput: { ...input },
-    MuiFilledInput: { ...input }
+    MuiFilledInput: { ...input },
     // MuiPopover: { ...popover },
-    // MuiButtonBase: { ...buttonBase },
-    // MuiIcon: { ...icon },
+    MuiButtonBase: { ...base },
+    MuiIcon: { ...icon }
     // MuiSvgIcon: { ...svgIcon },
     // MuiLink: { ...link }
   }

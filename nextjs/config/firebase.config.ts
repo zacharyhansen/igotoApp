@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore';
 import { getAuth, connectAuthEmulator, signOut } from 'firebase/auth';
+import { getStorage, connectStorageEmulator } from 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -15,16 +16,23 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
+const storage = getStorage(firebaseApp);
 
+// Connect emulators instead if configured
 if (
   process.env.NODE_ENV !== 'production' &&
   process.env.CONNECT_PRODUCTION !== 'true'
 ) {
-  connectAuthEmulator(auth, process.env.FIREBASE_AUTH_EMULATOR_URL!);
+  connectAuthEmulator(auth, process.env.AUTH_EMULATOR_URL!);
   connectFirestoreEmulator(
     db,
-    process.env.FIREBASE_FIRESTORE_EMULATOR_HOST!,
-    parseInt(process.env.FIREBASE_FIRESTORE_EMULATOR_PORT!)
+    process.env.FIREBASE_EMULATOR_HOST!,
+    parseInt(process.env.FIRESTORE_EMULATOR_PORT!)
+  );
+  connectStorageEmulator(
+    storage,
+    process.env.FIREBASE_EMULATOR_HOST!,
+    parseInt(process.env.STORAGE_EMULATOR_PORT!)
   );
 }
 
@@ -39,4 +47,4 @@ const firebaseSignOut = (onSignout?: VoidFunction) => () => {
     });
 };
 
-export { firebaseApp, db, auth, firebaseSignOut };
+export { firebaseApp, db, auth, storage, firebaseSignOut };

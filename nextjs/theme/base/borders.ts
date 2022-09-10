@@ -6,7 +6,15 @@ const { grey } = colors;
 export interface IBorders {
   borderColor: string;
   borderWidth: { [key: number]: string };
-  borderRadius: { [key: string]: string };
+  borderRadius: {
+    xs: string;
+    sm: string;
+    md: string;
+    lg: string;
+    xl: string;
+    xxl: string;
+    section: string;
+  };
 }
 
 const borders: IBorders = {
