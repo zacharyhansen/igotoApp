@@ -25,6 +25,7 @@ import menu from './components/menu';
 import menuItem from './components/menuItem';
 import tooltip from './components/tooltip';
 import icon from './components/icon';
+import linearProgress from './components/linearProgress';
 
 export type VoyPaletteColor = SimplePaletteColorOptions & { focus?: string };
 interface MyThemeExtensions {
@@ -104,7 +105,7 @@ export default createTheme({
     // MuiTableContainer: { ...tableContainer },
     // MuiTableHead: { ...tableHead },
     // MuiTableCell: { ...tableCell },
-    // MuiLinearProgress: { ...linearProgress },
+    MuiLinearProgress: { ...linearProgress },
     // MuiBreadcrumbs: { ...breadcrumbs },
     // MuiSlider: { ...slider },
     MuiAvatar: { ...avatar },

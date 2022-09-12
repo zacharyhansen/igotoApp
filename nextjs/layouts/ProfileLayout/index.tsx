@@ -1,11 +1,24 @@
 import { Card, Grid } from '@mui/material';
+import { useCurrentUserContext } from 'contexts/currentUserContext';
+import useUserDoc from 'hooks/firestore/useUserDoc';
 import { FunctionComponent } from 'react';
 import VoyBox from '../../components/muiStyled/VoyBox';
 import ProfileHeader from './ProfileHeader';
+import { useRouter } from 'next/router';
+import VoyProgress from 'components/muiStyled/VoyProgress';
 
 interface IProfileLayoutProps {}
 
 const ProfileLayout: FunctionComponent<IProfileLayoutProps> = () => {
+  const router = useRouter();
+  const uid = router.query.uid as string;
+  const currentUser = useCurrentUserContext()?.currentUser;
+  const user = useUserDoc(uid);
+
+  if (!user || !currentUser) {
+    return <VoyProgress />;
+  }
+
   return (
     <VoyBox
       sx={({ breakpoints, transitions, functions: { pxToRem } }) => ({
@@ -19,7 +32,7 @@ const ProfileLayout: FunctionComponent<IProfileLayoutProps> = () => {
         }
       })}
     >
-      <ProfileHeader />
+      <ProfileHeader user={user} currentUser={currentUser} />
       <VoyBox mt={5} mb={3}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} xl={4}>

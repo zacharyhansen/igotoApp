@@ -1,6 +1,12 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore';
-import { getAuth, connectAuthEmulator, signOut } from 'firebase/auth';
+import {
+  getFirestore,
+  connectFirestoreEmulator,
+  DocumentData,
+  CollectionReference,
+  collection
+} from 'firebase/firestore';
+import { getAuth, connectAuthEmulator, signOut, User } from 'firebase/auth';
 import { getStorage, connectStorageEmulator } from 'firebase/storage';
 
 const firebaseConfig = {
@@ -47,4 +53,18 @@ const firebaseSignOut = (onSignout?: VoidFunction) => () => {
     });
 };
 
-export { firebaseApp, db, auth, storage, firebaseSignOut };
+// type firestore - use collections instead of db whenever possible
+const createCollection = <T = DocumentData>(collectionName: string) => {
+  return collection(db, collectionName) as CollectionReference<T>;
+};
+
+export const usersCol = createCollection<User>('users');
+
+/**
+ * All firestore collections with appropiate type
+ */
+const collections = {
+  users: createCollection<User>('users')
+};
+
+export { firebaseApp, db, collections, auth, storage, firebaseSignOut };

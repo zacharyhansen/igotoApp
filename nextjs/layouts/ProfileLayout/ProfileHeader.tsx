@@ -1,4 +1,5 @@
 import {
+  ChangeEvent,
   FunctionComponent,
   SyntheticEvent,
   useCallback,
@@ -8,11 +9,8 @@ import {
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import VoyAvatar from '../../components/muiStyled/VoyAvatar';
-import marie from '../../assets/images/marie.jpg';
-import Image from 'next/image';
+import VoyAvatar, { stringAvatar } from '../../components/muiStyled/VoyAvatar';
 import VoyBox from '../../components/muiStyled/VoyBox';
-import { useCurrentUserContext } from '../../contexts/currentUserContext';
 import curved0 from '../../assets/images/curved0.jpg';
 import VoyTypography from '../../components/muiStyled/VoyTypography';
 import AppBar from '@mui/material/AppBar';
@@ -24,32 +22,64 @@ import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
 import Edit from '@mui/icons-material/AppRegistration';
-import { useUploadFile } from 'react-firebase-hooks/storage';
-import { getStorage, ref } from 'firebase/storage';
+import { getDownloadURL, ref } from 'firebase/storage';
+import useFireBaseStorage from 'hooks/firebaseStorage/useUserStorage';
 import { storage } from 'config/firebase.config';
-import VoyButton from 'components/muiStyled/VoyButton';
+import FirebaseStoragePaths from 'config/FirebaseStoragePaths';
+import { User } from 'firebase/auth';
 
-interface IProfileHeaderProps {}
+interface IProfileHeaderProps {
+  // User whos profile is being viewed
+  user: User;
+  // Current Authed user if there is one
+  currentUser?: User;
+}
 
-const ProfileHeader: FunctionComponent<IProfileHeaderProps> = () => {
+const ProfileHeader: FunctionComponent<IProfileHeaderProps> = ({
+  user,
+  currentUser
+}) => {
+  const [profileImage, setProfileImage] = useState<string>();
+  // Background image of null means it was not found so the component should fill it with the default
+  const [backgroundImage, setBackgroundImage] = useState<string | null>();
   const [tabsOrientation, setTabsOrientation] = useState<
     'horizontal' | 'vertical'
   >('horizontal');
+  const { profileUpload, backgroundUpload } = useFireBaseStorage(user);
   const [tabValue, setTabValue] = useState<number>(0);
-  const currentUser = useCurrentUserContext()?.currentUser;
-  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
-  const [uploadFile, uploading, snapshot, error] = useUploadFile();
-  const file = ref(storage, 'IMG_7420.jpeg');
-  const [selectedFile, setSelectedFile] = useState<File>();
+  // Upload the new profile image then download and set state as profile image
+  const handleProfileUpload = (e: ChangeEvent<HTMLInputElement>) =>
+    profileUpload(e).then(snapshot =>
+      getDownloadURL(snapshot.ref)
+        .then(url => setProfileImage(url))
+        .catch(err => {})
+    );
 
-  const upload = async () => {
-    console.log('Error: ', error, snapshot);
-    if (selectedFile) {
-      const result = await uploadFile(file, selectedFile);
-    }
-  };
+  // Upload the new background image then download and set state as background image
+  const handleBackgroundUpload = (e: ChangeEvent<HTMLInputElement>) =>
+    backgroundUpload(e).then(snapshot =>
+      getDownloadURL(snapshot.ref)
+        .then(url => setBackgroundImage(url))
+        .catch(err => {})
+    );
+
+  useEffect(() => {
+    getDownloadURL(ref(storage, FirebaseStoragePaths.profileImage(user.uid)))
+      .then(url => setProfileImage(url))
+      .catch(err => {
+        // If it doesnt exist thats ok
+      });
+    getDownloadURL(ref(storage, FirebaseStoragePaths.backgroundImage(user.uid)))
+      .then(url => setBackgroundImage(url))
+      .catch(() => {
+        setBackgroundImage(null);
+      })
+      .catch(err => {
+        // If it doesnt exist thats ok
+      });
+  });
 
   useEffect(() => {
     // A function that sets the orientation state of the tabs.
@@ -58,39 +88,28 @@ const ProfileHeader: FunctionComponent<IProfileHeaderProps> = () => {
         ? setTabsOrientation('vertical')
         : setTabsOrientation('horizontal');
     };
-
-    /** 
-     The event listener that's calling the handleTabsOrientation function when resizing the window.
-    */
+    //  The event listener that's calling the handleTabsOrientation function when resizing the window.
     window.addEventListener('resize', handleTabsOrientation);
-
-    // Call the handleTabsOrientation function to set the state with the initial value.
     handleTabsOrientation();
-
-    // Remove event listener on cleanup
     return () => window.removeEventListener('resize', handleTabsOrientation);
   }, [tabsOrientation]);
 
   const handleSetTabValue = useCallback(
-    (event: SyntheticEvent<Element, Event>, newValue: number) =>
+    (e: SyntheticEvent<Element, Event>, newValue: number) =>
       setTabValue(newValue),
     []
   );
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
+  const handleOpenUserMenu = useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      setAnchorElUser(event.currentTarget);
+    },
+    []
+  );
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = useCallback(() => {
     setAnchorElUser(null);
-  };
+  }, []);
 
   return (
     <VoyBox position="relative">
@@ -105,10 +124,12 @@ const ProfileHeader: FunctionComponent<IProfileHeaderProps> = () => {
             functions: { rgba, linearGradient },
             palette: { gradients }
           }) =>
-            `${linearGradient(
-              rgba(gradients.info.main, 0.6),
-              rgba(gradients.info.state, 0.6)
-            )}, url(${curved0.src})`,
+            backgroundImage !== null
+              ? `url(${backgroundImage})`
+              : `${linearGradient(
+                  rgba(gradients.info.main, 0.6),
+                  rgba(gradients.info.state, 0.6)
+                )}, url(${curved0.src})`,
           backgroundSize: 'cover',
           backgroundPosition: '50%',
           overflow: 'hidden'
@@ -129,31 +150,34 @@ const ProfileHeader: FunctionComponent<IProfileHeaderProps> = () => {
       >
         <Grid container spacing={3} alignItems="center">
           <Grid item>
-            <VoyAvatar
-              // src="test"
-              alt="profile-image"
-              variant="rounded"
-              size="xl"
-              shadow="sm"
-            >
-              <Image
-                src={currentUser?.photoURL || marie}
-                alt="me"
-                layout="fill"
+            {profileImage ? (
+              <VoyAvatar
+                src={profileImage}
+                alt="profile-image"
+                variant="rounded"
+                size="xl"
+                shadow="sm"
               />
-            </VoyAvatar>
+            ) : (
+              <VoyAvatar
+                variant="rounded"
+                size="xl"
+                shadow="sm"
+                {...stringAvatar('zach hansen')}
+              />
+            )}
           </Grid>
           <Grid item>
             <VoyBox height="100%" mt={0.5} lineHeight={1}>
               <Typography variant="h5" fontWeight="medium">
-                {currentUser?.displayName}
+                {user?.displayName || ''}
               </Typography>
               <VoyTypography
                 variant="button"
                 color="textColor"
                 fontWeight="medium"
               >
-                {currentUser?.email}
+                {user?.email || ''}
               </VoyTypography>
             </VoyBox>
           </Grid>
@@ -170,61 +194,62 @@ const ProfileHeader: FunctionComponent<IProfileHeaderProps> = () => {
               </Tabs>
             </AppBar>
           </Grid>
-          <Grid item>
-            <VoyBox sx={{ flexGrow: 0 }}>
-              <Tooltip title="Edit profile">
-                <IconButton onClick={handleOpenUserMenu} sx={{}}>
-                  <Edit />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: '45px' }}
-                // id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right'
-                }}
-                // keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right'
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                <MenuItem key={'Profile Picture'} component="label">
-                  Edit Profile Picture
-                  <input
-                    hidden
-                    accept="image/*"
-                    type="file"
-                    onChange={e => {
-                      const file = e.target.files
-                        ? e.target.files[0]
-                        : undefined;
-                      setSelectedFile(file);
-                    }}
-                  />
-                </MenuItem>
-                <MenuItem
-                  key={'Background'}
-                  onClick={handleCloseUserMenu}
-                  component="label"
+          {currentUser?.uid === user?.uid ? (
+            <Grid item>
+              <VoyBox sx={{ flexGrow: 0 }}>
+                <Tooltip title="Edit profile">
+                  <IconButton onClick={handleOpenUserMenu} sx={{}}>
+                    <Edit />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: '45px' }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right'
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right'
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
                 >
-                  Edit Background
-                  <input hidden accept="image/*" type="file" />
-                </MenuItem>
-              </Menu>
-            </VoyBox>
-          </Grid>
+                  <MenuItem
+                    key={'Profile Picture'}
+                    component="label"
+                    onClick={handleCloseUserMenu}
+                  >
+                    Edit Profile Picture
+                    <input
+                      hidden
+                      accept="image/*"
+                      type="file"
+                      onChange={handleProfileUpload}
+                    />
+                  </MenuItem>
+                  <MenuItem
+                    key={'Background'}
+                    component="label"
+                    onClick={handleCloseUserMenu}
+                  >
+                    Edit Background
+                    <input
+                      hidden
+                      accept="image/*"
+                      type="file"
+                      onChange={handleBackgroundUpload}
+                    />
+                  </MenuItem>
+                </Menu>
+              </VoyBox>
+            </Grid>
+          ) : null}
         </Grid>
       </Card>
-      {error && <strong>Error: {error.message}</strong>}
-      {uploading && <span>Uploading file...</span>}
-      {snapshot && <span>Snapshot: {JSON.stringify(snapshot)}</span>}
-      {selectedFile && <span>Selected file: {selectedFile.name}</span>}
-      <VoyButton onClick={upload}>Upload</VoyButton>
     </VoyBox>
   );
 };

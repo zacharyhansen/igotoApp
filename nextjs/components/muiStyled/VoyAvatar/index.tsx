@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles';
 import Avatar, { AvatarProps } from '@mui/material/Avatar';
 import { useMemo } from 'react';
 import { validColor, validGradient } from '../../../theme/base/colors';
+import Strings from 'helpers/Strings';
 
 interface IVoyAvatarProps extends AvatarProps {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
@@ -96,5 +97,14 @@ const VoyAvatar = styled(Avatar)<IVoyAvatarProps>(
     };
   }
 );
+
+export const stringAvatar = (name: string) => {
+  return {
+    sx: {
+      bgcolor: Strings.stringToColor(name)
+    },
+    children: Strings.getInitials(name)
+  };
+};
 
 export default VoyAvatar;

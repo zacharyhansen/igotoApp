@@ -1,10 +1,11 @@
+import { routes } from 'constants/routes';
 import { GoogleAuthProvider, EmailAuthProvider } from 'firebase/auth';
 
 export const uiConfig = {
   signInFlow: 'popup',
-  signInSuccessUrl: '/profile',
-  tosUrl: '/terms-of-service',
-  privacyPolicyUrl: '/privacy-policy',
+  signInSuccessUrl: routes.DASHBOARD,
+  tosUrl: routes.TERMS,
+  privacyPolicyUrl: routes.PRIVACY,
   signInOptions: [
     'apple.com',
     GoogleAuthProvider.PROVIDER_ID,

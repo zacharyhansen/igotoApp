@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import Link from 'next/link';
@@ -15,31 +15,8 @@ import AdbIcon from '@mui/icons-material/Adb';
 import Image from 'next/image';
 import logoSVG from 'assets/svgs/logo.svg';
 import CloseIcon from '@mui/icons-material/Close';
-
-const routes = [
-  {
-    type: 'link',
-    name: 'Dashboard',
-    key: 'dashboard',
-    route: '/dashboard',
-    noCollapse: true
-  },
-  {
-    type: 'link',
-    name: 'Tables',
-    key: 'tables',
-    route: '/tables',
-    noCollapse: true
-  },
-  { type: 'title', title: 'Account Pages', key: 'account-pages' },
-  {
-    type: 'link',
-    name: 'Profile',
-    key: 'profile',
-    route: '/profile',
-    noCollapse: true
-  }
-];
+import { useCurrentUserContext } from 'contexts/currentUserContext';
+import { routes } from 'constants/routes';
 
 interface ISideNavProps {}
 
@@ -49,7 +26,34 @@ const Sidenav: FunctionComponent<ISideNavProps> = props => {
   const pathname = useRouter().pathname;
   const collapseName = pathname.split('/').slice(1)[0];
   const closeSidenav = useCallback(() => setMiniSidenav(dispatch, true), []);
-
+  const currentUser = useCurrentUserContext()?.currentUser;
+  const routeOptions = useMemo(
+    () => [
+      {
+        type: 'link',
+        name: 'Dashboard',
+        key: 'dashboard',
+        route: '/dashboard',
+        noCollapse: true
+      },
+      {
+        type: 'link',
+        name: 'Tables',
+        key: 'tables',
+        route: '/tables',
+        noCollapse: true
+      },
+      { type: 'title', title: 'Account Pages', key: 'account-pages' },
+      {
+        type: 'link',
+        name: 'Profile',
+        key: 'profile',
+        route: `${routes.PROFILE}/${currentUser?.uid}`,
+        noCollapse: true
+      }
+    ],
+    [currentUser?.uid]
+  );
   useEffect(() => {
     const handleMiniSidenav = () => {
       setMiniSidenav(dispatch, window.innerWidth < 1200);
@@ -68,7 +72,7 @@ const Sidenav: FunctionComponent<ISideNavProps> = props => {
   }, [dispatch, pathname]);
 
   // Render all the routes from the routes.js (All the visible items on the Sidenav)
-  const renderRoutes = routes.map(
+  const renderRoutes = routeOptions.map(
     ({ type, name, title, noCollapse, key, route }) => {
       if (type === 'link') {
         return (
